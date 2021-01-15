@@ -1,4 +1,4 @@
-package com.teema.my.recyclerviewexample.data
+package com.teema.my.recyclerviewexample.data.post
 
 import com.google.gson.annotations.SerializedName
 

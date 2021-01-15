@@ -1,23 +1,26 @@
 package com.teema.my.recyclerviewexample.repository.post
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
+import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
-import com.teema.my.recyclerviewexample.data.Post
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import com.teema.my.recyclerviewexample.data.post.Post
+import com.teema.my.recyclerviewexample.data.post.PostDeserializer
 import javax.inject.Inject
 
 class RemotePostRepositoryImpl @Inject constructor(
-    private val appContext: Context
+    appContext: Context
 ) : PostRepository {
 
     companion object {
         const val URL = "https://jsonplaceholder.typicode.com/posts"
     }
 
-    val queue = Volley.newRequestQueue(appContext)
+    private val queue: RequestQueue = Volley.newRequestQueue(appContext)
 
     override var _postList: MutableLiveData<ArrayList<Post>> = MutableLiveData(ArrayList())
 
@@ -25,7 +28,10 @@ class RemotePostRepositoryImpl @Inject constructor(
         queue.add(
             JsonArrayRequest(Request.Method.GET, URL, null,
                 { response ->
-                    Log.d("RemotePostRepository", response.toString())
+                    _postList.value = GsonBuilder()
+                        .registerTypeAdapter(Post::class.java, PostDeserializer())
+                        .create()
+                        .fromJson(response.toString(), Array<Post>::class.java).toList() as ArrayList<Post>
                 },
                 { }
             ))

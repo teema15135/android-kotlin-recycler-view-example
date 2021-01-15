@@ -1,7 +1,7 @@
 package com.teema.my.recyclerviewexample.repository.post
 
 import androidx.lifecycle.MutableLiveData
-import com.teema.my.recyclerviewexample.data.Post
+import com.teema.my.recyclerviewexample.data.post.Post
 import javax.inject.Inject
 
 class FakePostRepositoryImpl @Inject constructor() : PostRepository {

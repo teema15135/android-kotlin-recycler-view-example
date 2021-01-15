@@ -1,6 +1,9 @@
-package com.teema.my.recyclerviewexample.repository.post
+package com.teema.my.recyclerviewexample.dagger.module
 
 import android.content.Context
+import com.teema.my.recyclerviewexample.repository.post.FakePostRepositoryImpl
+import com.teema.my.recyclerviewexample.repository.post.PostRepository
+import com.teema.my.recyclerviewexample.repository.post.RemotePostRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,5 +19,6 @@ object RepositoryModule {
     @Provides
     fun providePostRepository(@ApplicationContext appContext: Context): PostRepository {
         return RemotePostRepositoryImpl(appContext)
+//        return FakePostRepositoryImpl()
     }
 }
